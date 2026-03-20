@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class Category
 {
-    private int $id;
+    private ?int $id;
     private string $name;
 
     public function __construct(
@@ -14,12 +14,12 @@ class Category
         $this->name = $name;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void 
+    public function setId(?int $id): void 
     {
         $this->id = $id;
     }
@@ -34,7 +34,7 @@ class Category
         $this->name = $name;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->id . " : " . $this->name;
     }
