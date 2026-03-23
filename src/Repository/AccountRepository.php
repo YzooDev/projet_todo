@@ -57,7 +57,7 @@ class AccountRepository
         return false;
     }
 
-    public function findAccountByEmail(string $email): ?Account 
+    public function findAccountByEmail(string $email): ?Account
     {
         try {
             //1 Ecrire la requête,
@@ -73,7 +73,10 @@ class AccountRepository
             $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Account::class);
             $account = $req->fetch();
             //6 retourner le résultat du Fetch.
-            return $account ?? null;
+            if (isset($account) && $account == true) {
+                return $account;
+            }
+            return null;
         } catch(\PDOException $e) {}
         return null;
     }

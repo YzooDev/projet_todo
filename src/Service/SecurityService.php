@@ -72,4 +72,37 @@ class SecurityService
         //echo "déconnecté";
         //header("Refresh:2; url=/");
     }
+
+    public function login(array $account): string 
+    {
+        //1 vérifier si les champs sont remplis
+        if (
+            empty($account["email"]) ||
+            empty($account["password"])
+        ) {
+            return "Veuillez remplir tous les champs du formulaire";
+        }
+
+        //2 nettoyer les données
+        Tools::sanitize_array($account);
+
+        //3 Récupération du compte
+        $user = $this->accountRepository->findAccountByEmail($account["email"]);
+
+        //5 vérifier si le compte n'existe pas
+        if ($user == null) {
+            return "Les informations de connexion sont incorrectes";
+        }
+
+        if (!$user->verifyPassword($account["password"])) {
+            return "Les informations de connexion sont incorrectes";
+        }
+        //Super globale de session
+        $_SESSION["connected"] = true;
+        $_SESSION["email"] = $user->getEmail();
+        $_SESSION["firstname"] = $user->getFirstname();
+        $_SESSION["lastname"] = $user->getLastname();
+
+        return "Vous etes connecté";
+    }
 }

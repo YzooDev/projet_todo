@@ -38,10 +38,10 @@ switch ($path) {
         $securityController->createAccount();
         break;
     case '/login':
-        $securityController->createAccount();
+        $securityController->connexion();
         break;
     case '/logout':
-        $securityController->createAccount();
+        $securityController->deconnexion();
         break;
     default:
         echo "404 la page n'existe pas";
