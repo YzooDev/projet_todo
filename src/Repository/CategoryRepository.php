@@ -64,7 +64,7 @@ class CategoryRepository
             //3 Exécuter la requête
             $req->execute();
             //4 Récupérer la réponse
-            $req->setFetchMode(\PDO::FETCH_CLASS, Category::class);
+            $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Category::class);
             $categories = $req->fetchAll();
         } catch(\PDOException $e) {}
         return $categories;

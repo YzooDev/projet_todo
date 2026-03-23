@@ -5,10 +5,10 @@ namespace App\Entity;
 class Category
 {
     private ?int $id;
-    private string $name;
+    private ?string $name;
 
     public function __construct(
-        string $name
+        ?string $name = null
     )
     {
         $this->name = $name;
@@ -24,12 +24,12 @@ class Category
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void 
+    public function setName(?string $name): void 
     {
         $this->name = $name;
     }
