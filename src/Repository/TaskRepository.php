@@ -31,7 +31,11 @@ class TaskRepository
             $req->bindValue(2,$task->getDescription(), \PDO::PARAM_STR);
             $req->bindValue(3,$task->getCreatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
             $req->bindValue(4,$task->getUpdatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
-            $req->bindValue(5,$task->getFinishOn()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+            if ($task->getFinishOn() != null) {
+                $req->bindValue(5,$task->getFinishOn()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+            } else {
+                $req->bindValue(5,$task->getCreatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+            }
             $req->bindValue(6,$task->getStatus(), \PDO::PARAM_BOOL);
             $req->bindValue(7,$task->getRepeat(), \PDO::PARAM_STR);
             $req->bindValue(8,$task->getAuthor()->getId(), \PDO::PARAM_INT);
@@ -43,7 +47,10 @@ class TaskRepository
             $task->setId($id);
             //appeler la méthode addCategoriesToTask
             $this->addCategoriesToTask($task);
-        } catch(\PDOException $e) {}
+        } catch(\PDOException $e) 
+        {
+            echo $e->getMessage();
+        }
         return $task;
     }
 

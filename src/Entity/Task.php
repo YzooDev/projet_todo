@@ -30,7 +30,7 @@ class Task
         $this->createdAt = $createdAt;
         $this->updatedAt = $createdAt;
         $this->status = true;
-        $this->finishOn = new DateTime("0000-00-00");
+        $this->finishOn = null;
         $this->repeat = "";
         $this->author = $author;
         $this->categories = [];
