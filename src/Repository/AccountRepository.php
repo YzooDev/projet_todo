@@ -69,16 +69,32 @@ class AccountRepository
             $req->bindParam(1, $email, \PDO::PARAM_STR);
             //4 Exécuter la requête,
             $req->execute();
-            //5 Fetch en FETCH assoc,
-            $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Account::class);
-            $account = $req->fetch();
-            //6 retourner le résultat du Fetch.
-            if (isset($account) && $account == true) {
-                return $account;
+            //5 Fetch en FETCH assoc + hydratation en Account
+            $account = $req->fetch(\PDO::FETCH_ASSOC);
+            //6 test si account Existe
+            if ($account != false) {
+                //Hydratation en Account
+                return $this->hydrateAccount($account);
             }
             return null;
         } catch(\PDOException $e) {}
         return null;
+    }
+
+    /**
+     * Méthode pour Hydrater en Account
+     * @param array $row ligne d'enregistrement SQL
+     * @return Account Objet Account
+     */
+    public function hydrateAccount(array $row): Account 
+    {
+        $account = new Account($row["email"], $row["password"]);
+        $account
+            ->setId($row["id"])
+            ->setFirstname($row["firstname"])
+            ->setLastname($row["lastname"])
+            ->setImage($row["image"]);
+        return $account;
     }
 }
 
