@@ -149,7 +149,7 @@ class TaskRepository
      * @param Task Entity Task
      * @return array<Task> Tableau d'Entity Task
      */
-    public function findAllTaskByAccount(Task $task): array
+    public function findAllTaskByAccount(int $id): array
     {
         try {
             //1 Ecrire la requête SQL
@@ -166,7 +166,7 @@ class TaskRepository
             //2 Préparer la requête
             $req = $this->connect->prepare($sql);
             //3 Assigner le paramètre
-            $req->bindValue(1, $task->getAuthor()->getId(), \PDO::PARAM_INT);
+            $req->bindValue(1, $id, \PDO::PARAM_INT);
             //4 Exécuter la requête
             $req->execute();
             //5 Retourner la réponse (Tab asso)
@@ -211,17 +211,21 @@ class TaskRepository
         ;
 
         //4 Tableau des catégories
-        $categories_name = explode(",",$row["categories_name"]);
-        $categories_id = explode(",",$row["categories_id"]);
+        $categories_name = explode(",",(string)$row["categories_name"]);
+        $categories_id = explode(",",(string)$row["categories_id"]);
 
         //5 Boucle pour assigner les Categories
         for ($i=0; $i <count($categories_name) ; $i++) {
-            //6 Création d'une nouvelle Category
-            $cat = new Category($categories_name[$i]);
-            //7 Set de l'ID de la Category
-            $cat->setId($categories_id[$i]);
-            //8 Ajout de la Category à la collection de la Task
-            $entityTask->addCategory($cat);
+            //6 Test si la category existe
+            if($categories_id[$i] != 0 && $categories_name[$i] != "") {
+                //7 Création d'une nouvelle Category
+                $cat = new Category($categories_name[$i]);
+                //8 Set de l'ID de la Category
+                $cat->setId((int)$categories_id[$i]);
+                //9 Ajout de la Category à la collection de la Task
+                $entityTask->addCategory($cat);
+            }
+
         }
 
         return $entityTask;
