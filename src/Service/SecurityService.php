@@ -56,7 +56,9 @@ class SecurityService
         $user->hashPassword();
 
         //8 ajouter le compte
-        $this->accountRepository->addAccount($user);
+        if ($this->accountRepository->addAccount($user)->getId() == null) {
+            return "Enregistrement impossible";
+        };
 
         return "Le compte : " . $user->getEmail() . " a été ajouté en BDD";
     }

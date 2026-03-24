@@ -16,7 +16,9 @@
             <input type="password" name="confirm-password" placeholder="confirmer le mot de passe">
             <input type="submit" value="Inscription" name="submit">
         </form>
-        <p><?= $data["msg"] ?? "" ?></p>
+        <?php if(isset($data["msg"])) : ?>
+        <p><?= $data["msg"] ?></p>
+        <?php endif; ?>
     </main>
 </body>
 </html>

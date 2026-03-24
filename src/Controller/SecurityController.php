@@ -17,7 +17,7 @@ class SecurityController extends AbstractController
 
     public function createAccount() : mixed 
     {
-        $data= [];
+        $data = [];
         if (isset($_POST["submit"])) {
             $data["msg"] = $this->securityService->register($_POST);
         }
@@ -35,7 +35,7 @@ class SecurityController extends AbstractController
             //Si on est connecté alors redirection vers l'accueil       
             if ($data["msg"] == "Vous etes connecté") header("Location:/");
             //redirection
-            header("Refresh:2;");
+            header("Refresh:4;");
         }
 
         $this->render("connexion","connexion", $data);
