@@ -51,11 +51,12 @@ class TaskService
     /**
      * Méthode pour récupérer toutes les taches d'un account
      * @param int $id ID de l'Account connecté
+     * @param bool $status status de la tache
      * @return array<Task> Tableau d'Entity Task
      */
-    public function getAllTaskByAccount(int $id): array 
+    public function getAllTaskByAccount(int $id, bool $status = true): array 
     {
-        return $this->taskRepository->findAllTaskByAccount($id);
+        return $this->taskRepository->findAllTaskByAccount($id, $status);
     }
 
     /**
@@ -88,5 +89,14 @@ class TaskService
         }
 
         return $addTask;
+    }
+
+    /**
+     * 
+     */
+    public function changeTaskStatus(int $id, bool $status): void 
+    {
+        Tools::sanitize($id);
+        $this->taskRepository->updateTaskStatus($id, (bool) $status);
     }
 }

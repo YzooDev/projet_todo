@@ -146,10 +146,11 @@ class TaskRepository
 
     /**
      * Méthode qui retourne toutes les Task d'un Account
-     * @param Task Entity Task
+     * @param int $id ID de la tache
+     * @param bool $status status de la tache
      * @return array<Task> Tableau d'Entity Task
      */
-    public function findAllTaskByAccount(int $id): array
+    public function findAllTaskByAccount(int $id, bool $status = true): array
     {
         try {
             //1 Ecrire la requête SQL
@@ -161,12 +162,13 @@ class TaskRepository
             FROM task AS t 
             LEFT JOIN task_category AS tc ON  t.id = tc.task_id
             LEFT JOIN category AS c ON tc.category_id = c.id
-            WHERE t.account_id = ?  GROUP BY t.id
+            WHERE t.account_id = ? AND t.`status` = ? GROUP BY t.id
             SQL;
             //2 Préparer la requête
             $req = $this->connect->prepare($sql);
             //3 Assigner le paramètre
-            $req->bindValue(1, $id, \PDO::PARAM_INT);
+            $req->bindParam(1, $id, \PDO::PARAM_INT);
+            $req->bindParam(2, $status, \PDO::PARAM_BOOL);
             //4 Exécuter la requête
             $req->execute();
             //5 Retourner la réponse (Tab asso)
@@ -230,5 +232,21 @@ class TaskRepository
         }
 
         return $entityTask;
+    }
+
+    /**
+     * Méthode pour passer le status de la task à false
+     * @param int $id ID de la tache
+     * @return void
+     */
+    public function updateTaskStatus(int $id, bool $status ): void 
+    {
+        try {
+            $sql = "UPDATE task SET `status` = ? WHERE id = ?";
+            $req = $this->connect->prepare($sql);
+            $req->bindParam(1, $status, \PDO::PARAM_BOOL);
+            $req->bindParam(2, $id, \PDO::PARAM_INT);
+            $req->execute();
+        } catch(\PDOException $e) {}
     }
 }

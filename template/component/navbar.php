@@ -13,7 +13,8 @@
     <li><a href="/category/all">Catégories</a></li>
     <li><a href="/category/new">Ajout Catégorie</a></li>
     <li><a href="/task/new">Ajout Tache</a></li>
-    <li><a href="/task/all">Mes Taches</a></li>
+    <li><a href="/task/activeall">Mes Taches Actives</a></li>
+    <li><a href="/task/inactiveall">Mes Taches Inactives</a></li>
     <li><a href="/logout">Déconnexion</a></li>
     <?php endif ?>
   </ul>

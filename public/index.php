@@ -48,8 +48,14 @@ switch ($path) {
     case '/task/new':
         $taskController->createTask();
         break;
-    case '/task/all':
-        $taskController->showAllTaskByAccount();
+    case '/task/activeall':
+        $taskController->showAllTaskByAccount(true);
+        break;
+    case '/task/inactiveall':
+        $taskController->showAllTaskByAccount(false);
+        break;
+    case '/task/update':
+        $taskController->editStatusTask();
         break;
     default:
         echo "404 la page n'existe pas";

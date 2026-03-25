@@ -11,7 +11,7 @@
 <body>
     <?php include 'component/navbar.php'; ?>
     <main class="container-fluid">
-        <h2>Liste des taches</h2>
+        <h2>Liste des taches <?= $data["title"] ?></h2>
         <section>
         <?php foreach ($data["tasks"] as $task): ?>
             <article>
@@ -25,7 +25,7 @@
                     <button class="pill-button"><?= $category->getName() ?></button>
                     <?php endforeach ?>
                 </div>
-                <a href="/task/update?id=<?= $task->getId() ?>"><button>valider</button></a>
+                <a href="/task/update?id=<?= $task->getId() ?>&status=<?= $data["state"] ?>"><button><?= $data["buttonValue"] ?></button></a>
             </article>
         <?php endforeach ?>
         </section>
