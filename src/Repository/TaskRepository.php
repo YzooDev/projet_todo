@@ -208,6 +208,7 @@ class TaskRepository
             ->setFinishOn(new \DateTime($row["task_finish_on"]))
             ->setRepeat($row["task_repeat"])
             ->setStatus($row["task_status"])
+            ->setId($row["task_id"])
         ;
 
         //4 Tableau des catégories

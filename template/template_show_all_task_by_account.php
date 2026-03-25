@@ -25,6 +25,7 @@
                     <button class="pill-button"><?= $category->getName() ?></button>
                     <?php endforeach ?>
                 </div>
+                <a href="/task/update?id=<?= (string)$task->getId() ?>"><button>valider</button></a>
             </article>
         <?php endforeach ?>
         </section>
